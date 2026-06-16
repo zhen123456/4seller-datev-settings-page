@@ -506,6 +506,32 @@
     .mini-table input, .mini-table select { min-width: 96px; }
     .wide { grid-column: 1 / -1; }
 
+    .field-note-list {
+      margin: 0 16px 16px;
+      padding: 10px 12px;
+      border: 1px solid var(--border-1);
+      border-radius: 4px;
+      background: var(--fill-1);
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .field-note-title {
+      margin-bottom: 6px;
+      color: var(--text-1);
+      font-weight: 600;
+    }
+
+    .field-note-list ul {
+      margin: 0;
+      padding-left: 16px;
+    }
+
+    .field-note-list li + li {
+      margin-top: 4px;
+    }
+
     .tokens {
       padding: 0 16px 16px;
       display: grid;
@@ -645,12 +671,12 @@
       <section class="section">
         <div class="section-title"><span data-i18n="sectionGeneral">Allgemeines</span> <small data-i18n="required">Required</small></div>
         <div class="form-grid">
-          <div class="field"><label>DATEV Beraternummer <span class="req">*</span></label><input value="1234" maxlength="7" inputmode="numeric"><div class="help">Tax advisor number. Usually numeric, max. 7 digits.</div></div>
-          <div class="field"><label>Mandantennummer <span class="req">*</span></label><input value="1234" maxlength="5" inputmode="numeric"><div class="help">Client number in DATEV, max. 5 digits.</div></div>
-          <div class="field"><label>Länge Sachkontennummern <span class="req">*</span></label><select><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select><div class="help">Defines the length used for ledger accounts.</div></div>
-          <div class="field"><label>Export Format <span class="req">*</span></label><select><option selected>DATEV Format (CSV)</option></select><div class="help">Revenue export file format.</div></div>
-          <div class="field"><label>Beginn des Wirtschaftsjahres Tag <span class="req">*</span></label><select><option selected>1</option><option>15</option></select><div class="help">Fiscal year start day.</div></div>
-          <div class="field"><label>Monat <span class="req">*</span></label><select><option selected>Januar</option><option>Februar</option><option>März</option><option>April</option><option>Mai</option><option>Juni</option><option>Juli</option><option>August</option><option>September</option><option>Oktober</option><option>November</option><option>Dezember</option></select><div class="help">Fiscal year start month.</div></div>
+          <div class="field"><label>DATEV Beraternummer <span class="req">*</span></label><input value="1234" maxlength="7" inputmode="numeric"><div class="help">Identifies the tax advisor in the DATEV header. This value is agreed with the accountant and is required for import.</div></div>
+          <div class="field"><label>Mandantennummer <span class="req">*</span></label><input value="1234" maxlength="5" inputmode="numeric"><div class="help">Identifies the client/company in DATEV. It must match the accountant's DATEV client master data.</div></div>
+          <div class="field"><label>Länge Sachkontennummern <span class="req">*</span></label><select><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select><div class="help">Controls the account number length for revenue, debtor and clearing accounts. It must match the chart of accounts used in DATEV.</div></div>
+          <div class="field"><label>Export Format <span class="req">*</span></label><select><option selected>DATEV Format (CSV)</option></select><div class="help">Defines the technical export format. DATEV CSV is used for importing booking batches into DATEV.</div></div>
+          <div class="field"><label>Beginn des Wirtschaftsjahres Tag <span class="req">*</span></label><select><option selected>1</option><option>15</option></select><div class="help">Day on which the fiscal year starts. Together with month it prevents mixing bookings from different fiscal years.</div></div>
+          <div class="field"><label>Monat <span class="req">*</span></label><select><option selected>Januar</option><option>Februar</option><option>März</option><option>April</option><option>Mai</option><option>Juni</option><option>Juli</option><option>August</option><option>September</option><option>Oktober</option><option>November</option><option>Dezember</option></select><div class="help">Month on which the fiscal year starts. This is used with the start day for period validation.</div></div>
         </div>
       </section>
 
@@ -659,6 +685,7 @@
         <div class="mini-table">
           <table><thead><tr><th>Land</th><th>Konto</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="8400" maxlength="8" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
         </div>
+        <div class="field-note-list"><div class="field-note-title">Field notes</div><ul><li>Land: country rule for this account. "Alle anderen Länder" is the fallback when no country-specific rule exists.</li><li>Konto: DATEV revenue account for sales with full VAT, for example SKR03 8400.</li><li>+: adds another country-specific account rule.</li></ul></div>
       </section>
 
       <section class="section">
@@ -666,6 +693,7 @@
         <div class="mini-table">
           <table><thead><tr><th>Land</th><th>Konto</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
         </div>
+        <div class="field-note-list"><div class="field-note-title">Field notes</div><ul><li>Land: country rule for reduced VAT bookings.</li><li>Konto: DATEV revenue account for reduced VAT sales, used when the order item has a reduced tax rate.</li><li>+: adds a country-specific reduced VAT account.</li></ul></div>
       </section>
 
       <section class="section">
@@ -673,6 +701,7 @@
         <div class="mini-table">
           <table><thead><tr><th>Land</th><th>Konto</th><th>Steuerschlüssel</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td><input value="" maxlength="3" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
         </div>
+        <div class="field-note-list"><div class="field-note-title">Field notes</div><ul><li>Land: country rule for digital goods and electronically supplied services.</li><li>Konto: DATEV revenue account used for digital article revenue.</li><li>Steuerschlüssel: optional DATEV tax key when the tax treatment cannot be derived from the account alone.</li><li>+: adds another country-specific digital goods rule.</li></ul></div>
       </section>
 
       <section class="section">
@@ -680,6 +709,7 @@
         <div class="mini-table">
           <table><thead><tr><th>Land</th><th>Konto</th><th>Steuerschlüssel</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td><input value="" maxlength="3" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
         </div>
+        <div class="field-note-list"><div class="field-note-title">Field notes</div><ul><li>Land: country rule for sales that are not taxable in Germany.</li><li>Konto: revenue account for domestic non-taxable sales.</li><li>Steuerschlüssel: DATEV tax key if required by the accountant for this non-taxable case.</li><li>+: adds a separate country rule.</li></ul></div>
       </section>
 
       <section class="section">
@@ -687,6 +717,7 @@
         <div class="mini-table">
           <table><thead><tr><th>Land</th><th>Konto</th><th>Steuerschlüssel</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td><input value="" maxlength="3" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
         </div>
+        <div class="field-note-list"><div class="field-note-title">Field notes</div><ul><li>Land: country rule for non-taxable sales with reduced-rate item logic.</li><li>Konto: revenue account for this reduced-rate non-taxable case.</li><li>Steuerschlüssel: optional DATEV tax key for the reduced-rate non-taxable rule.</li><li>+: adds another country-specific rule.</li></ul></div>
       </section>
 
       <section class="section">
@@ -694,6 +725,7 @@
         <div class="mini-table">
           <table><thead><tr><th>Land</th><th>Konto</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
         </div>
+        <div class="field-note-list"><div class="field-note-title">Field notes</div><ul><li>Land: country rule for tax-free sales to third countries outside the EU.</li><li>Konto: DATEV revenue account for tax-free third-country sales.</li><li>+: adds a country-specific third-country account.</li></ul></div>
       </section>
 
       <section class="section">
@@ -701,6 +733,7 @@
         <div class="mini-table">
           <table><thead><tr><th>Land</th><th>Konto</th><th>Steuerschlüssel</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td><input value="" maxlength="3" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
         </div>
+        <div class="field-note-list"><div class="field-note-title">Field notes</div><ul><li>Land: EU destination country for OSS distance sales.</li><li>Konto: revenue account for OSS sales at the standard rate.</li><li>Steuerschlüssel: DATEV tax key for the destination-country VAT treatment when needed.</li><li>+: adds a country-specific OSS rule.</li></ul></div>
       </section>
 
       <section class="section">
@@ -708,23 +741,24 @@
         <div class="mini-table">
           <table><thead><tr><th>Land</th><th>Konto</th><th>Steuerschlüssel</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td><input value="" maxlength="3" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
         </div>
+        <div class="field-note-list"><div class="field-note-title">Field notes</div><ul><li>Land: EU destination country for reduced-rate OSS distance sales.</li><li>Konto: revenue account for OSS sales at the reduced rate.</li><li>Steuerschlüssel: DATEV tax key for the reduced destination-country VAT treatment when needed.</li><li>+: adds a country-specific reduced OSS rule.</li></ul></div>
       </section>
 
       <section class="section">
         <div class="section-title"><span data-i18n="sectionOtherRevenue">Sonstige Erlöskonten</span> <small data-i18n="optional">Optional</small></div>
         <div class="form-grid">
-          <div class="field"><label>Erlöskonto Kleinunternehmer</label><input value="8195" maxlength="8" inputmode="numeric"><div class="help">For small business taxation.</div></div>
-          <div class="field"><label>Erlöskonto keine Umsatzsteuer</label><input value="" maxlength="8" inputmode="numeric"><div class="help">Used when no VAT is booked.</div></div>
-          <div class="field"><label>Erlöskonto steuerfreie innergemeinschaftliche Umsätze</label><input value="" maxlength="8" inputmode="numeric"><div class="help">For tax-free EU intra-community sales.</div></div>
-          <div class="field"><label>Erlöskonto Differenzbesteuerung</label><input value="" maxlength="8" inputmode="numeric"><div class="help">For margin scheme bookings.</div></div>
+          <div class="field"><label>Erlöskonto Kleinunternehmer</label><input value="8195" maxlength="8" inputmode="numeric"><div class="help">Revenue account used when the company is treated as a small business and does not show VAT on invoices.</div></div>
+          <div class="field"><label>Erlöskonto keine Umsatzsteuer</label><input value="" maxlength="8" inputmode="numeric"><div class="help">Fallback revenue account for orders where no VAT is booked and no more specific tax case matches.</div></div>
+          <div class="field"><label>Erlöskonto steuerfreie innergemeinschaftliche Umsätze</label><input value="" maxlength="8" inputmode="numeric"><div class="help">Revenue account for tax-free intra-community B2B sales within the EU.</div></div>
+          <div class="field"><label>Erlöskonto Differenzbesteuerung</label><input value="" maxlength="8" inputmode="numeric"><div class="help">Revenue account for margin scheme taxation where VAT is calculated on the margin rather than the full sales price.</div></div>
         </div>
       </section>
 
       <section class="section">
         <div class="section-title"><span data-i18n="sectionDebtors">Debitorkonten</span> <small data-i18n="required">Required</small></div>
         <div class="form-grid">
-          <div class="field"><label>Modus <span class="req">*</span></label><select><option selected>Sammelkonto</option><option>Kundennummer</option></select><div class="help">Choose whether orders use one collective debtor account or customer numbers.</div></div>
-          <div class="field"><label>Debitoren Sammelkonto</label><input value="1111" maxlength="8" inputmode="numeric"><div class="help">Collective debtor account used when mode is Sammelkonto.</div></div>
+          <div class="field"><label>Modus <span class="req">*</span></label><select><option selected>Sammelkonto</option><option>Kundennummer</option></select><div class="help">Defines how the contra account is created: one collective debtor account for all orders, or customer-number based debtor accounts.</div></div>
+          <div class="field"><label>Debitoren Sammelkonto</label><input value="1111" maxlength="8" inputmode="numeric"><div class="help">Contra account used for all customer receivables when Modus is Sammelkonto. This is the account that appears opposite the revenue account.</div></div>
         </div>
       </section>
 
@@ -733,31 +767,32 @@
         <div class="mini-table">
           <table><thead><tr><th>Zahlart</th><th>Konto</th><th></th></tr></thead><tbody><tr><td>PayPal</td><td><input value="" maxlength="8" inputmode="numeric"></td><td class="link">+</td></tr><tr><td>Banküberweisung</td><td><input value="" maxlength="8" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
         </div>
+        <div class="field-note-list"><div class="field-note-title">Field notes</div><ul><li>Zahlart: payment method from the order or payment transaction, for example PayPal or bank transfer.</li><li>Konto: clearing account used for this payment method when payment-specific collection accounts are needed.</li><li>+: adds another payment method rule.</li></ul></div>
       </section>
 
       <section class="section">
         <div class="section-title"><span data-i18n="sectionVoucherTexts">Sonstiges / Belegtexte</span> <small data-i18n="mixedRequired">Required and optional text fields</small></div>
         <div class="form-grid">
-          <div class="field"><label>Umsatzkontonummern pro Shop erhöhen</label><input value="2" maxlength="4" inputmode="numeric"><div class="help">Increases revenue account numbers per shop when used.</div></div>
-          <div class="field"><label>Debitorenkontonummern pro Shop erhöhen</label><input value="2" maxlength="4" inputmode="numeric"><div class="help">Increases debtor account numbers per shop when used.</div></div>
-          <div class="field"><label>Eigenschaft Belegdatum <span class="req">*</span></label><select><option selected>Bestelldatum</option><option>Zahldatum</option><option>Rechnungsdatum</option><option>Versanddatum</option></select><div class="help">Selects which order date is written as voucher date.</div></div>
+          <div class="field"><label>Umsatzkontonummern pro Shop erhöhen</label><input value="2" maxlength="4" inputmode="numeric"><div class="help">Adds a shop-specific offset to revenue account numbers. Example: base account 8400 plus offset 2 can separate revenue by shop.</div></div>
+          <div class="field"><label>Debitorenkontonummern pro Shop erhöhen</label><input value="2" maxlength="4" inputmode="numeric"><div class="help">Adds a shop-specific offset to debtor account numbers when debtor accounts are separated by shop.</div></div>
+          <div class="field"><label>Eigenschaft Belegdatum <span class="req">*</span></label><select><option selected>Bestelldatum</option><option>Zahldatum</option><option>Rechnungsdatum</option><option>Versanddatum</option></select><div class="help">Selects which order date is written to DATEV as Belegdatum, such as order date, payment date, invoice date or shipping date.</div></div>
           <div class="field wide template-field active">
             <label>Belegtext</label>
             <textarea data-token-target>{OrderRef}</textarea>
             <div class="variable-guide" data-variable-guide></div>
-            <div class="help">One DATEV text field generated from a template. Click placeholders below to insert variables.</div>
+            <div class="help">Template for the DATEV Belegtext column. It is exported as one text value built from fixed text and placeholders.</div>
           </div>
           <div class="field template-field">
             <label>Belegfeld 1</label>
             <input data-token-target value="{InvoiceNumber}">
             <div class="variable-guide" data-variable-guide></div>
-            <div class="help">DATEV voucher field 1 template.</div>
+            <div class="help">Template for DATEV Belegfeld 1. Often used for invoice number, external order number or another primary document reference.</div>
           </div>
           <div class="field template-field">
             <label>Belegfeld 2</label>
             <input data-token-target value="{ShopName}">
             <div class="variable-guide" data-variable-guide></div>
-            <div class="help">DATEV voucher field 2 template.</div>
+            <div class="help">Template for DATEV Belegfeld 2. Often used for shop name, shipping date or a secondary reference.</div>
           </div>
         </div>
         <div class="tokens">
@@ -1098,6 +1133,29 @@
       }
     };
 
+    const helpTranslations = {
+      zh: {
+        "Identifies the tax advisor in the DATEV header. This value is agreed with the accountant and is required for import.": "写入 DATEV 文件头的税务顾问编号。该值通常由会计师提供，导入 DATEV 时必填。",
+        "Identifies the client/company in DATEV. It must match the accountant's DATEV client master data.": "DATEV 中的客户/公司编号，必须与会计师维护的 DATEV 客户主数据一致。",
+        "Controls the account number length for revenue, debtor and clearing accounts. It must match the chart of accounts used in DATEV.": "控制收入科目、债务人科目和过渡科目的编号长度，必须与 DATEV 中使用的会计科目表一致。",
+        "Defines the technical export format. DATEV CSV is used for importing booking batches into DATEV.": "定义技术导出格式。DATEV CSV 用于将记账批次导入 DATEV。",
+        "Day on which the fiscal year starts. Together with month it prevents mixing bookings from different fiscal years.": "财年开始的日期。与月份一起用于避免不同财年的记账记录混在同一次导出中。",
+        "Month on which the fiscal year starts. This is used with the start day for period validation.": "财年开始的月份。与开始日期一起用于导出期间校验。",
+        "Revenue account used when the company is treated as a small business and does not show VAT on invoices.": "当企业按小规模企业规则处理、发票不显示增值税时使用的收入科目。",
+        "Fallback revenue account for orders where no VAT is booked and no more specific tax case matches.": "无增值税订单的兜底收入科目；当没有更具体的税务场景匹配时使用。",
+        "Revenue account for tax-free intra-community B2B sales within the EU.": "欧盟内 B2B 免税销售使用的收入科目。",
+        "Revenue account for margin scheme taxation where VAT is calculated on the margin rather than the full sales price.": "差额征税场景使用的收入科目，增值税按差额而不是销售全额计算。",
+        "Defines how the contra account is created: one collective debtor account for all orders, or customer-number based debtor accounts.": "定义对方科目生成方式：所有订单使用一个债务人汇总科目，或按客户编号生成债务人科目。",
+        "Contra account used for all customer receivables when Modus is Sammelkonto. This is the account that appears opposite the revenue account.": "当模式为汇总科目时，所有客户应收使用的对方科目。它会作为收入科目的对应科目出现在分录中。",
+        "Adds a shop-specific offset to revenue account numbers. Example: base account 8400 plus offset 2 can separate revenue by shop.": "给收入科目增加按店铺区分的偏移量。例如基础科目 8400 加偏移量 2，可用于按店铺区分收入。",
+        "Adds a shop-specific offset to debtor account numbers when debtor accounts are separated by shop.": "当债务人科目需要按店铺区分时，给债务人科目增加店铺偏移量。",
+        "Selects which order date is written to DATEV as Belegdatum, such as order date, payment date, invoice date or shipping date.": "选择写入 DATEV 凭证日期的来源，例如下单日期、付款日期、发票日期或发货日期。",
+        "Template for the DATEV Belegtext column. It is exported as one text value built from fixed text and placeholders.": "DATEV Belegtext 列的模板。导出时会把固定文本和占位符合并成一个文本值。",
+        "Template for DATEV Belegfeld 1. Often used for invoice number, external order number or another primary document reference.": "DATEV Belegfeld 1 的模板。通常用于发票号、外部订单号或主要凭证引用。",
+        "Template for DATEV Belegfeld 2. Often used for shop name, shipping date or a secondary reference.": "DATEV Belegfeld 2 的模板。通常用于店铺名称、发货日期或次要引用。"
+      }
+    };
+
     const originalTextNodes = new WeakMap();
 
     const drawer = document.getElementById("drawer");
@@ -1108,7 +1166,7 @@
 
     function applyLanguage(lang) {
       const dictionary = i18n[lang];
-      const nodeDictionary = staticText[lang] || {};
+      const nodeDictionary = { ...(staticText[lang] || {}), ...(helpTranslations[lang] || {}) };
       document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
       document.querySelectorAll("[data-i18n]").forEach((node) => {
         const key = node.dataset.i18n;
