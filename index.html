@@ -1,0 +1,1207 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>4Seller DATEV Erlösexport</title>
+  <style>
+    :root {
+      --brand: #008069;
+      --brand-hover: #1f9983;
+      --brand-pressed: #006b58;
+      --brand-bg: #ebf5f3;
+      --text-1: #1d2129;
+      --text-2: #4e5969;
+      --text-3: #86909c;
+      --text-4: #c0c4cc;
+      --border-1: #ebeef5;
+      --border-2: #e4e7ed;
+      --border-3: #dcdfe6;
+      --fill-1: #f7f8fa;
+      --fill-2: #f2f3f5;
+      --error: #f53f3f;
+      --warning-bg: #fff2e6;
+      --warning: #ff7d00;
+      --mask: rgba(29, 33, 41, .48);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 1360px;
+      background: #fff;
+      color: var(--text-1);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 400;
+    }
+
+    .topbar {
+      height: 48px;
+      background: #1d2129;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 32px;
+    }
+
+    .brand {
+      width: 144px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 600;
+    }
+
+    .brand-mark {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: var(--brand);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--text-4);
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .topnav span.active { color: #fff; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 232px minmax(0, 1fr);
+      min-height: calc(100vh - 48px);
+      background: #fff;
+    }
+
+    .sidebar {
+      background: var(--fill-1);
+      border-right: 1px solid var(--border-1);
+      padding: 20px 16px;
+    }
+
+    .side-title {
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin: 18px 0 8px;
+    }
+
+    .side-title:first-child { margin-top: 0; }
+
+    .side-item {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      padding-left: 28px;
+      color: var(--text-1);
+      font-size: 14px;
+      line-height: 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .side-item:hover { background: var(--fill-2); }
+
+    .side-item.active {
+      color: var(--brand);
+      background: rgba(0, 128, 105, .08);
+      font-weight: 600;
+    }
+
+    .main {
+      padding: 28px 32px;
+      background: #fff;
+    }
+
+    .page-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 600;
+    }
+
+    .page-head p {
+      margin: 6px 0 0;
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 20px;
+      max-width: 800px;
+    }
+
+    .lang-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 0;
+      justify-content: flex-end;
+    }
+
+    .lang-pill {
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border-2);
+      background: #fff;
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 16px;
+      cursor: pointer;
+    }
+
+    .lang-pill.active {
+      border-color: var(--brand);
+      background: var(--brand-bg);
+      color: var(--brand);
+    }
+
+    .head-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      height: 36px;
+      min-width: 80px;
+      border-radius: 4px;
+      padding: 0 16px;
+      border: 1px solid var(--border-3);
+      background: #fff;
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .btn:hover { background: var(--fill-2); }
+
+    .btn.primary {
+      border-color: var(--brand);
+      background: var(--brand);
+      color: #fff;
+    }
+
+    .btn.primary:hover { background: var(--brand-hover); }
+    .btn.primary:active { background: var(--brand-pressed); }
+
+    .card {
+      border: 1px solid var(--border-1);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .toolbar {
+      height: 48px;
+      border-bottom: 1px solid var(--border-1);
+      background: #fff;
+      padding: 0 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tabs {
+      display: flex;
+      height: 100%;
+      gap: 24px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .tab {
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      color: var(--text-2);
+      cursor: pointer;
+    }
+
+    .tab.active {
+      color: var(--brand);
+      border-bottom-color: var(--brand);
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    th {
+      height: 40px;
+      padding: 0 16px;
+      background: var(--fill-1);
+      border-bottom: 1px solid var(--border-1);
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-1);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border-1);
+      vertical-align: top;
+      color: var(--text-1);
+    }
+
+    tr:hover td { background: #f5f7fa; }
+
+    .muted { color: var(--text-3); }
+    .link { color: var(--brand); cursor: pointer; }
+
+    .tag {
+      display: inline-flex;
+      height: 22px;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 4px;
+      background: var(--brand-bg);
+      color: var(--brand);
+      font-size: 12px;
+      line-height: 16px;
+      margin: 0 6px 4px 0;
+    }
+
+    .tag.warning {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+
+    .mask {
+      position: fixed;
+      inset: 48px 0 0;
+      background: var(--mask);
+      z-index: 10;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 48px;
+      right: 0;
+      bottom: 0;
+      width: 820px;
+      background: #fff;
+      z-index: 11;
+      box-shadow: -8px 0 24px rgba(29, 33, 41, .16);
+      display: grid;
+      grid-template-rows: 64px minmax(0, 1fr) 64px;
+    }
+
+    .drawer-head {
+      height: 64px;
+      padding: 0 24px 0 40px;
+      border-bottom: 1px solid var(--border-1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .drawer-head h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 600;
+    }
+
+    .close {
+      width: 32px;
+      height: 32px;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--text-3);
+      font-size: 20px;
+      line-height: 28px;
+      cursor: pointer;
+    }
+
+    .close:hover { background: var(--fill-2); }
+
+    .drawer-body {
+      overflow: auto;
+      padding: 20px 28px 28px;
+      background: #fff;
+    }
+
+    .notice {
+      padding: 12px 16px;
+      border: 1px solid var(--border-2);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--text-1);
+      font-size: 14px;
+      line-height: 20px;
+      margin-bottom: 16px;
+    }
+
+    .notice strong {
+      font-weight: 600;
+      color: var(--text-1);
+    }
+
+    .notice .translation {
+      margin-top: 6px;
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .section {
+      border: 1px solid var(--border-1);
+      border-radius: 4px;
+      margin-bottom: 16px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .section-title {
+      min-height: 44px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-1);
+      background: #fff;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+
+    .section-title small {
+      color: var(--text-3);
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .form-grid {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 6px;
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .req { color: var(--error); }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border-3);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--text-1);
+      font: inherit;
+      font-size: 12px;
+      line-height: 16px;
+      outline: none;
+    }
+
+    input, select {
+      height: 32px;
+      padding: 1px 12px;
+    }
+
+    textarea {
+      min-height: 72px;
+      padding: 8px 12px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 2px rgba(0, 128, 105, .08);
+    }
+
+    .help {
+      margin-top: 4px;
+      color: var(--text-3);
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .template-field {
+      position: relative;
+    }
+
+    .variable-guide {
+      display: none;
+      margin-top: 6px;
+      padding: 8px;
+      border: 1px solid var(--border-2);
+      border-radius: 4px;
+      background: var(--fill-1);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .template-field.active .variable-guide {
+      display: grid;
+    }
+
+    .variable-chip {
+      height: 28px;
+      border: 1px solid rgba(0, 128, 105, .24);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--brand);
+      padding: 0 8px;
+      font-family: Consolas, "Cascadia Mono", monospace;
+      font-size: 12px;
+      line-height: 16px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .variable-chip:hover {
+      border-color: var(--brand);
+      background: var(--brand-bg);
+    }
+
+    .mini-table {
+      padding: 0 16px 16px;
+      overflow-x: auto;
+    }
+
+    .mini-table input, .mini-table select { min-width: 96px; }
+    .wide { grid-column: 1 / -1; }
+
+    .tokens {
+      padding: 0 16px 16px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .token {
+      border: 1px solid var(--border-2);
+      background: #fff;
+      border-radius: 4px;
+      padding: 8px;
+      text-align: left;
+      cursor: pointer;
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .token:hover {
+      border-color: var(--brand);
+      background: rgba(0, 128, 105, .05);
+    }
+
+    .token code {
+      display: block;
+      color: var(--brand);
+      margin-bottom: 4px;
+      font-family: Consolas, "Cascadia Mono", monospace;
+    }
+
+    .drawer-foot {
+      height: 64px;
+      padding: 0 28px;
+      border-top: 1px solid var(--border-1);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">4</span>4Seller</div>
+    <nav class="topnav">
+      <span>Home</span><span>Listings</span><span>Order</span><span>Inventory</span><span>Report</span><span>Marketing</span><span class="active">Tools</span>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="side-title">Integration</div>
+      <div class="side-item">Shop</div>
+      <div class="side-item">Payment</div>
+      <div class="side-title">Order & Shipping</div>
+      <div class="side-item">Shipping Carriers</div>
+      <div class="side-item">Print Settings</div>
+      <div class="side-item">Packages Settings</div>
+      <div class="side-item">Address</div>
+      <div class="side-item">Process Settings</div>
+      <div class="side-item">Automations</div>
+      <div class="side-item">Order export template</div>
+      <div class="side-item active">DATEV Erlösexport</div>
+      <div class="side-item">German Invoice</div>
+      <div class="side-title">General settings</div>
+      <div class="side-item">Company profile</div>
+      <div class="side-item">Accounting settings</div>
+    </aside>
+
+    <main class="main">
+      <div class="page-head">
+        <div>
+          <h1 data-i18n="pageTitle">DATEV Erlösexport</h1>
+          <p data-i18n="pageIntro">Configure the revenue export for DATEV. The setting groups follow Billbee's Erlösexport: general DATEV data, revenue accounts, debtor accounts, payment clearing accounts and voucher text placeholders.</p>
+        </div>
+        <div class="head-actions">
+          <div class="lang-row" aria-label="Language">
+            <button class="lang-pill active" data-lang="de">Deutsch</button>
+            <button class="lang-pill" data-lang="en">English</button>
+            <button class="lang-pill" data-lang="zh">中文</button>
+          </div>
+          <button class="btn primary" id="openDrawer" data-i18n="editSettings">Edit settings</button>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="toolbar">
+          <div class="tabs">
+            <div class="tab active">DATEV Erlösexport</div>
+            <div class="tab">DATEV Zahlungsexport</div>
+            <div class="tab">Eigene Exporte</div>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="thExport">Export</th>
+              <th data-i18n="thFormat">Format</th>
+              <th data-i18n="thRequired">Required accounts</th>
+              <th data-i18n="thOptional">Optional accounts</th>
+              <th data-i18n="thVoucher">Voucher fields</th>
+              <th data-i18n="thStatus">Status</th>
+              <th data-i18n="thAction">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DATEV Erlösexport</strong><div class="muted" data-i18n="rowDesc">Order revenue booking records</div></td>
+              <td>DATEV Format (CSV)</td>
+              <td><span class="tag" data-i18n="tagFullVat">Full VAT</span><span class="tag" data-i18n="tagReducedVat">Reduced VAT</span><span class="tag" data-i18n="tagDigital">Digital items</span></td>
+              <td><span class="tag warning" data-i18n="tagOptional">Used only when configured</span></td>
+              <td>Belegtext, Belegfeld 1, Belegfeld 2</td>
+              <td><span class="tag" data-i18n="configured">Configured</span></td>
+              <td><span class="link" id="editProfile" data-i18n="edit">Edit</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="mask" id="mask"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <h2 data-i18n="drawerTitle">DATEV Erlösexport settings</h2>
+      <button class="close" id="closeDrawer" aria-label="Close">×</button>
+    </div>
+
+    <div class="drawer-body">
+      <div class="notice">
+        <strong data-i18n="noticeStrong">Billbee-compatible structure.</strong> <span data-i18n="noticeMain">Only one fiscal year should be included per export. Required account sections must be configured before DATEV revenue booking data can be exported.</span>
+        <div class="translation" data-i18n="noticeSub">Optional account sections are only used when values are entered.</div>
+      </div>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionGeneral">Allgemeines</span> <small data-i18n="required">Required</small></div>
+        <div class="form-grid">
+          <div class="field"><label>DATEV Beraternummer <span class="req">*</span></label><input value="1234" maxlength="7" inputmode="numeric"><div class="help">Tax advisor number. Usually numeric, max. 7 digits.</div></div>
+          <div class="field"><label>Mandantennummer <span class="req">*</span></label><input value="1234" maxlength="5" inputmode="numeric"><div class="help">Client number in DATEV, max. 5 digits.</div></div>
+          <div class="field"><label>Länge Sachkontennummern <span class="req">*</span></label><select><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select><div class="help">Defines the length used for ledger accounts.</div></div>
+          <div class="field"><label>Export Format <span class="req">*</span></label><select><option selected>DATEV Format (CSV)</option></select><div class="help">Revenue export file format.</div></div>
+          <div class="field"><label>Beginn des Wirtschaftsjahres Tag <span class="req">*</span></label><select><option selected>1</option><option>15</option></select><div class="help">Fiscal year start day.</div></div>
+          <div class="field"><label>Monat <span class="req">*</span></label><select><option selected>Januar</option><option>Februar</option><option>März</option><option>April</option><option>Mai</option><option>Juni</option><option>Juli</option><option>August</option><option>September</option><option>Oktober</option><option>November</option><option>Dezember</option></select><div class="help">Fiscal year start month.</div></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionFullVat">Erlöskonten volle Umsatzsteuer</span> <small data-i18n="required">Required</small></div>
+        <div class="mini-table">
+          <table><thead><tr><th>Land</th><th>Konto</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="8400" maxlength="8" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionReducedVat">Erlöskonten ermäßigte Umsatzsteuer</span> <small data-i18n="required">Required</small></div>
+        <div class="mini-table">
+          <table><thead><tr><th>Land</th><th>Konto</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionDigital">Erlöskonten digitale Artikel</span> <small data-i18n="required">Required</small></div>
+        <div class="mini-table">
+          <table><thead><tr><th>Land</th><th>Konto</th><th>Steuerschlüssel</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td><input value="" maxlength="3" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionDomesticNonTaxable">Erlöskonten für im Inland nicht steuerbare Umsätze</span> <small data-i18n="optional">Optional</small></div>
+        <div class="mini-table">
+          <table><thead><tr><th>Land</th><th>Konto</th><th>Steuerschlüssel</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td><input value="" maxlength="3" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionDomesticNonTaxableReduced">Erlöskonten für im Inland nicht steuerbare Umsätze (ermäßigter Steuersatz)</span> <small data-i18n="optional">Optional</small></div>
+        <div class="mini-table">
+          <table><thead><tr><th>Land</th><th>Konto</th><th>Steuerschlüssel</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td><input value="" maxlength="3" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionThirdCountry">Erlöskonten steuerfreie Umsätze Drittland</span> <small data-i18n="optional">Optional</small></div>
+        <div class="mini-table">
+          <table><thead><tr><th>Land</th><th>Konto</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionOss">Erlöskonten OSS Fernverkäufe</span> <small data-i18n="optional">Optional</small></div>
+        <div class="mini-table">
+          <table><thead><tr><th>Land</th><th>Konto</th><th>Steuerschlüssel</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td><input value="" maxlength="3" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionOssReduced">Erlöskonten OSS Fernverkäufe (ermäßigter Steuersatz)</span> <small data-i18n="optional">Optional</small></div>
+        <div class="mini-table">
+          <table><thead><tr><th>Land</th><th>Konto</th><th>Steuerschlüssel</th><th></th></tr></thead><tbody><tr><td>Alle anderen Länder</td><td><input value="" maxlength="8" inputmode="numeric"></td><td><input value="" maxlength="3" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionOtherRevenue">Sonstige Erlöskonten</span> <small data-i18n="optional">Optional</small></div>
+        <div class="form-grid">
+          <div class="field"><label>Erlöskonto Kleinunternehmer</label><input value="8195" maxlength="8" inputmode="numeric"><div class="help">For small business taxation.</div></div>
+          <div class="field"><label>Erlöskonto keine Umsatzsteuer</label><input value="" maxlength="8" inputmode="numeric"><div class="help">Used when no VAT is booked.</div></div>
+          <div class="field"><label>Erlöskonto steuerfreie innergemeinschaftliche Umsätze</label><input value="" maxlength="8" inputmode="numeric"><div class="help">For tax-free EU intra-community sales.</div></div>
+          <div class="field"><label>Erlöskonto Differenzbesteuerung</label><input value="" maxlength="8" inputmode="numeric"><div class="help">For margin scheme bookings.</div></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionDebtors">Debitorkonten</span> <small data-i18n="required">Required</small></div>
+        <div class="form-grid">
+          <div class="field"><label>Modus <span class="req">*</span></label><select><option selected>Sammelkonto</option><option>Kundennummer</option></select><div class="help">Choose whether orders use one collective debtor account or customer numbers.</div></div>
+          <div class="field"><label>Debitoren Sammelkonto</label><input value="1111" maxlength="8" inputmode="numeric"><div class="help">Collective debtor account used when mode is Sammelkonto.</div></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionPaymentClearing">Sammelkonten pro Zahlart</span> <small data-i18n="optional">Optional</small></div>
+        <div class="mini-table">
+          <table><thead><tr><th>Zahlart</th><th>Konto</th><th></th></tr></thead><tbody><tr><td>PayPal</td><td><input value="" maxlength="8" inputmode="numeric"></td><td class="link">+</td></tr><tr><td>Banküberweisung</td><td><input value="" maxlength="8" inputmode="numeric"></td><td class="link">+</td></tr></tbody></table>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-title"><span data-i18n="sectionVoucherTexts">Sonstiges / Belegtexte</span> <small data-i18n="mixedRequired">Required and optional text fields</small></div>
+        <div class="form-grid">
+          <div class="field"><label>Umsatzkontonummern pro Shop erhöhen</label><input value="2" maxlength="4" inputmode="numeric"><div class="help">Increases revenue account numbers per shop when used.</div></div>
+          <div class="field"><label>Debitorenkontonummern pro Shop erhöhen</label><input value="2" maxlength="4" inputmode="numeric"><div class="help">Increases debtor account numbers per shop when used.</div></div>
+          <div class="field"><label>Eigenschaft Belegdatum <span class="req">*</span></label><select><option selected>Bestelldatum</option><option>Zahldatum</option><option>Rechnungsdatum</option><option>Versanddatum</option></select><div class="help">Selects which order date is written as voucher date.</div></div>
+          <div class="field wide template-field active">
+            <label>Belegtext</label>
+            <textarea data-token-target>{OrderRef}</textarea>
+            <div class="variable-guide" data-variable-guide></div>
+            <div class="help">One DATEV text field generated from a template. Click placeholders below to insert variables.</div>
+          </div>
+          <div class="field template-field">
+            <label>Belegfeld 1</label>
+            <input data-token-target value="{InvoiceNumber}">
+            <div class="variable-guide" data-variable-guide></div>
+            <div class="help">DATEV voucher field 1 template.</div>
+          </div>
+          <div class="field template-field">
+            <label>Belegfeld 2</label>
+            <input data-token-target value="{ShopName}">
+            <div class="variable-guide" data-variable-guide></div>
+            <div class="help">DATEV voucher field 2 template.</div>
+          </div>
+        </div>
+        <div class="tokens">
+          <button class="token" data-token="{BuyerName}"><code>{BuyerName}</code>Name des Käufers</button>
+          <button class="token" data-token="{CustomerNumber}"><code>{CustomerNumber}</code>Kundennummer</button>
+          <button class="token" data-token="{InvoiceNumber}"><code>{InvoiceNumber}</code>Rechnungsnummer</button>
+          <button class="token" data-token="{OrderDate}"><code>{OrderDate}</code>Auftragsdatum</button>
+          <button class="token" data-token="{OrderRef}"><code>{OrderRef}</code>Externe Bestellnummer</button>
+          <button class="token" data-token="{PaymentTransactionId}"><code>{PaymentTransactionId}</code>Zahlungs-ID</button>
+          <button class="token" data-token="{Platform}"><code>{Platform}</code>Plattform</button>
+          <button class="token" data-token="{ShipDate}"><code>{ShipDate}</code>Versanddatum</button>
+          <button class="token" data-token="{ShopName}"><code>{ShopName}</code>Shopname</button>
+          <button class="token" data-token="{TotalSum}"><code>{TotalSum}</code>Gesamtsumme</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="drawer-foot">
+      <button class="btn" id="cancel" data-i18n="close">Close</button>
+      <button class="btn primary" data-i18n="done">Done</button>
+    </div>
+  </aside>
+
+  <script>
+    const i18n = {
+      de: {
+        pageTitle: "DATEV Erlösexport",
+        pageIntro: "Konfiguriere den DATEV Erlösexport. Die Gruppen folgen der Billbee-Struktur: Allgemeines, Erlöskonten, Debitorkonten, Sammelkonten pro Zahlart und Belegtext-Platzhalter.",
+        editSettings: "Einstellungen bearbeiten",
+        thExport: "Export",
+        thFormat: "Format",
+        thRequired: "Pflichtkonten",
+        thOptional: "Optionale Konten",
+        thVoucher: "Belegfelder",
+        thStatus: "Status",
+        thAction: "Aktion",
+        rowDesc: "Buchungssätze für Bestellumsätze",
+        tagFullVat: "Volle USt.",
+        tagReducedVat: "Ermäßigte USt.",
+        tagDigital: "Digitale Artikel",
+        tagOptional: "Nur bei Konfiguration",
+        configured: "Konfiguriert",
+        edit: "Bearbeiten",
+        drawerTitle: "DATEV Erlösexport Einstellungen",
+        noticeStrong: "Billbee-kompatible Struktur.",
+        noticeMain: "Pro Export sollte nur ein Wirtschaftsjahr enthalten sein. Pflichtkonten müssen vor dem Export der DATEV-Umsatzbuchungen gepflegt sein.",
+        noticeSub: "Optionale Konten werden nur verwendet, wenn Werte eingetragen sind.",
+        sectionGeneral: "Allgemeines",
+        sectionFullVat: "Erlöskonten volle Umsatzsteuer",
+        sectionReducedVat: "Erlöskonten ermäßigte Umsatzsteuer",
+        sectionDigital: "Erlöskonten digitale Artikel",
+        sectionDomesticNonTaxable: "Erlöskonten für im Inland nicht steuerbare Umsätze",
+        sectionDomesticNonTaxableReduced: "Erlöskonten für im Inland nicht steuerbare Umsätze (ermäßigter Steuersatz)",
+        sectionThirdCountry: "Erlöskonten steuerfreie Umsätze Drittland",
+        sectionOss: "Erlöskonten OSS Fernverkäufe",
+        sectionOssReduced: "Erlöskonten OSS Fernverkäufe (ermäßigter Steuersatz)",
+        sectionOtherRevenue: "Sonstige Erlöskonten",
+        sectionDebtors: "Debitorkonten",
+        sectionPaymentClearing: "Sammelkonten pro Zahlart",
+        sectionVoucherTexts: "Sonstiges / Belegtexte",
+        required: "Pflicht",
+        optional: "Optional",
+        mixedRequired: "Pflicht- und optionale Textfelder",
+        close: "Schließen",
+        done: "Fertig"
+      },
+      en: {
+        pageTitle: "DATEV revenue export",
+        pageIntro: "Configure the DATEV revenue export. The groups follow Billbee's structure: general settings, revenue accounts, debtor accounts, payment clearing accounts and voucher text placeholders.",
+        editSettings: "Edit settings",
+        thExport: "Export",
+        thFormat: "Format",
+        thRequired: "Required accounts",
+        thOptional: "Optional accounts",
+        thVoucher: "Voucher fields",
+        thStatus: "Status",
+        thAction: "Action",
+        rowDesc: "Booking records for order revenue",
+        tagFullVat: "Full VAT",
+        tagReducedVat: "Reduced VAT",
+        tagDigital: "Digital items",
+        tagOptional: "Used only when configured",
+        configured: "Configured",
+        edit: "Edit",
+        drawerTitle: "DATEV revenue export settings",
+        noticeStrong: "Billbee-compatible structure.",
+        noticeMain: "Only one fiscal year should be included per export. Required account sections must be configured before DATEV revenue booking data can be exported.",
+        noticeSub: "Optional account sections are only used when values are entered.",
+        sectionGeneral: "General",
+        sectionFullVat: "Revenue accounts: full VAT",
+        sectionReducedVat: "Revenue accounts: reduced VAT",
+        sectionDigital: "Revenue accounts: digital items",
+        sectionDomesticNonTaxable: "Revenue accounts for domestic non-taxable sales",
+        sectionDomesticNonTaxableReduced: "Revenue accounts for domestic non-taxable sales (reduced rate)",
+        sectionThirdCountry: "Revenue accounts for tax-free third-country sales",
+        sectionOss: "Revenue accounts for OSS distance sales",
+        sectionOssReduced: "Revenue accounts for OSS distance sales (reduced rate)",
+        sectionOtherRevenue: "Other revenue accounts",
+        sectionDebtors: "Debtor accounts",
+        sectionPaymentClearing: "Clearing accounts per payment method",
+        sectionVoucherTexts: "Other / voucher texts",
+        required: "Required",
+        optional: "Optional",
+        mixedRequired: "Required and optional text fields",
+        close: "Close",
+        done: "Done"
+      },
+      zh: {
+        pageTitle: "DATEV 收入导出",
+        pageIntro: "配置 DATEV 收入导出。分组严格参考 Billbee：基础信息、收入科目、债务人科目、按支付方式的过渡科目，以及凭证文本占位符。",
+        editSettings: "编辑设置",
+        thExport: "导出",
+        thFormat: "格式",
+        thRequired: "必填科目",
+        thOptional: "可选科目",
+        thVoucher: "凭证字段",
+        thStatus: "状态",
+        thAction: "操作",
+        rowDesc: "订单收入记账记录",
+        tagFullVat: "标准税率",
+        tagReducedVat: "优惠税率",
+        tagDigital: "数字商品",
+        tagOptional: "仅配置后使用",
+        configured: "已配置",
+        edit: "编辑",
+        drawerTitle: "DATEV 收入导出设置",
+        noticeStrong: "兼容 Billbee 的结构。",
+        noticeMain: "每次导出建议只包含一个财年。必填科目需要先配置完成，才能导出 DATEV 收入记账数据。",
+        noticeSub: "可选科目只有填写后才会被使用。",
+        sectionGeneral: "基础信息",
+        sectionFullVat: "收入科目：标准税率",
+        sectionReducedVat: "收入科目：优惠税率",
+        sectionDigital: "收入科目：数字商品",
+        sectionDomesticNonTaxable: "收入科目：德国境内不征税销售",
+        sectionDomesticNonTaxableReduced: "收入科目：德国境内不征税销售（优惠税率）",
+        sectionThirdCountry: "收入科目：第三国免税销售",
+        sectionOss: "收入科目：OSS 远程销售",
+        sectionOssReduced: "收入科目：OSS 远程销售（优惠税率）",
+        sectionOtherRevenue: "其他收入科目",
+        sectionDebtors: "债务人科目",
+        sectionPaymentClearing: "按支付方式的过渡科目",
+        sectionVoucherTexts: "其他 / 凭证文本",
+        required: "必填",
+        optional: "可选",
+        mixedRequired: "必填和可选文本字段",
+        close: "关闭",
+        done: "完成"
+      }
+    };
+
+    const staticText = {
+      de: {},
+      en: {
+        Home: "Home",
+        Listings: "Listings",
+        Order: "Order",
+        Inventory: "Inventory",
+        Report: "Report",
+        Marketing: "Marketing",
+        Tools: "Tools",
+        Integration: "Integration",
+        Shop: "Shop",
+        Payment: "Payment",
+        "Order & Shipping": "Order & Shipping",
+        "Shipping Carriers": "Shipping Carriers",
+        "Print Settings": "Print Settings",
+        "Packages Settings": "Package Settings",
+        Address: "Address",
+        "Process Settings": "Process Settings",
+        Automations: "Automations",
+        "Order export template": "Order export template",
+        "German Invoice": "German invoice",
+        "General settings": "General settings",
+        "Company profile": "Company profile",
+        "Accounting settings": "Accounting settings",
+        Land: "Country",
+        Konto: "Account",
+        Steuerschlüssel: "Tax key",
+        Zahlart: "Payment method",
+        "Alle anderen Länder": "All other countries",
+        Banküberweisung: "Bank transfer",
+        "DATEV Beraternummer": "DATEV advisor number",
+        Mandantennummer: "Client number",
+        "Länge Sachkontennummern": "Ledger account number length",
+        "Export Format": "Export format",
+        "Beginn des Wirtschaftsjahres Tag": "Fiscal year start day",
+        Monat: "Month",
+        Januar: "January",
+        Februar: "February",
+        März: "March",
+        April: "April",
+        Mai: "May",
+        Juni: "June",
+        Juli: "July",
+        August: "August",
+        September: "September",
+        Oktober: "October",
+        November: "November",
+        Dezember: "December",
+        "Erlöskonto Kleinunternehmer": "Revenue account: small business",
+        "Erlöskonto keine Umsatzsteuer": "Revenue account: no VAT",
+        "Erlöskonto steuerfreie innergemeinschaftliche Umsätze": "Revenue account: tax-free intra-community sales",
+        "Erlöskonto Differenzbesteuerung": "Revenue account: margin scheme",
+        Modus: "Mode",
+        Sammelkonto: "Collective account",
+        Kundennummer: "Customer number",
+        "Debitoren Sammelkonto": "Collective debtor account",
+        "Umsatzkontonummern pro Shop erhöhen": "Increase revenue account numbers per shop",
+        "Debitorenkontonummern pro Shop erhöhen": "Increase debtor account numbers per shop",
+        "Eigenschaft Belegdatum": "Voucher date property",
+        Bestelldatum: "Order date",
+        Zahldatum: "Payment date",
+        Rechnungsdatum: "Invoice date",
+        Versanddatum: "Shipping date",
+        Belegtext: "Voucher text",
+        "Belegfeld 1": "Voucher field 1",
+        "Belegfeld 2": "Voucher field 2",
+        "Tax advisor number. Usually numeric, max. 7 digits.": "Tax advisor number. Usually numeric, max. 7 digits.",
+        "Client number in DATEV, max. 5 digits.": "Client number in DATEV, max. 5 digits.",
+        "Defines the length used for ledger accounts.": "Defines the length used for ledger accounts.",
+        "Revenue export file format.": "Revenue export file format.",
+        "Fiscal year start day.": "Fiscal year start day.",
+        "Fiscal year start month.": "Fiscal year start month.",
+        "For small business taxation.": "For small business taxation.",
+        "Used when no VAT is booked.": "Used when no VAT is booked.",
+        "For tax-free EU intra-community sales.": "For tax-free EU intra-community sales.",
+        "For margin scheme bookings.": "For margin scheme bookings.",
+        "Choose whether orders use one collective debtor account or customer numbers.": "Choose whether orders use one collective debtor account or customer numbers.",
+        "Collective debtor account used when mode is Sammelkonto.": "Collective debtor account used when mode is collective account.",
+        "Increases revenue account numbers per shop when used.": "Increases revenue account numbers per shop when used.",
+        "Increases debtor account numbers per shop when used.": "Increases debtor account numbers per shop when used.",
+        "Selects which order date is written as voucher date.": "Selects which order date is written as voucher date.",
+        "One DATEV text field generated from a template. Click placeholders below to insert variables.": "One DATEV text field generated from a template. Click placeholders below to insert variables.",
+        "DATEV voucher field 1 template.": "DATEV voucher field 1 template.",
+        "DATEV voucher field 2 template.": "DATEV voucher field 2 template.",
+        "Name des Käufers": "Buyer name",
+        Kundennummer: "Customer number",
+        Rechnungsnummer: "Invoice number",
+        Auftragsdatum: "Order date",
+        "Externe Bestellnummer": "External order number",
+        "Zahlungs-ID": "Payment ID",
+        Plattform: "Platform",
+        Versanddatum: "Shipping date",
+        Shopname: "Shop name",
+        Gesamtsumme: "Total amount"
+      },
+      zh: {
+        Home: "首页",
+        Listings: "商品",
+        Order: "订单",
+        Inventory: "库存",
+        Report: "报表",
+        Marketing: "营销",
+        Tools: "工具",
+        Integration: "集成",
+        Shop: "店铺",
+        Payment: "支付",
+        "Order & Shipping": "订单与发货",
+        "Shipping Carriers": "物流承运商",
+        "Print Settings": "打印设置",
+        "Packages Settings": "包裹设置",
+        Address: "地址",
+        "Process Settings": "流程设置",
+        Automations: "自动化",
+        "Order export template": "订单导出模板",
+        "German Invoice": "德国发票",
+        "General settings": "通用设置",
+        "Company profile": "企业资料",
+        "Accounting settings": "会计设置",
+        Land: "国家",
+        Konto: "科目",
+        Steuerschlüssel: "税务键",
+        Zahlart: "支付方式",
+        "Alle anderen Länder": "所有其他国家",
+        Banküberweisung: "银行转账",
+        "DATEV Beraternummer": "DATEV 税务顾问编号",
+        Mandantennummer: "客户编号",
+        "Länge Sachkontennummern": "总账科目编号长度",
+        "Export Format": "导出格式",
+        "Beginn des Wirtschaftsjahres Tag": "财年开始日",
+        Monat: "月份",
+        Januar: "一月",
+        Februar: "二月",
+        März: "三月",
+        April: "四月",
+        Mai: "五月",
+        Juni: "六月",
+        Juli: "七月",
+        August: "八月",
+        September: "九月",
+        Oktober: "十月",
+        November: "十一月",
+        Dezember: "十二月",
+        "Erlöskonto Kleinunternehmer": "小规模企业收入科目",
+        "Erlöskonto keine Umsatzsteuer": "无增值税收入科目",
+        "Erlöskonto steuerfreie innergemeinschaftliche Umsätze": "欧盟内免税销售收入科目",
+        "Erlöskonto Differenzbesteuerung": "差额征税收入科目",
+        Modus: "模式",
+        Sammelkonto: "汇总科目",
+        Kundennummer: "客户编号",
+        "Debitoren Sammelkonto": "债务人汇总科目",
+        "Umsatzkontonummern pro Shop erhöhen": "按店铺递增收入科目编号",
+        "Debitorenkontonummern pro Shop erhöhen": "按店铺递增债务人科目编号",
+        "Eigenschaft Belegdatum": "凭证日期来源",
+        Bestelldatum: "下单日期",
+        Zahldatum: "付款日期",
+        Rechnungsdatum: "发票日期",
+        Versanddatum: "发货日期",
+        Belegtext: "凭证文本",
+        "Belegfeld 1": "凭证字段 1",
+        "Belegfeld 2": "凭证字段 2",
+        "Tax advisor number. Usually numeric, max. 7 digits.": "税务顾问编号，通常为数字，最多 7 位。",
+        "Client number in DATEV, max. 5 digits.": "DATEV 中的客户编号，最多 5 位。",
+        "Defines the length used for ledger accounts.": "定义总账科目编号长度。",
+        "Revenue export file format.": "收入导出的文件格式。",
+        "Fiscal year start day.": "财年开始的日期。",
+        "Fiscal year start month.": "财年开始的月份。",
+        "For small business taxation.": "用于小规模企业税务场景。",
+        "Used when no VAT is booked.": "用于不记增值税的销售。",
+        "For tax-free EU intra-community sales.": "用于欧盟内免税销售。",
+        "For margin scheme bookings.": "用于差额征税记账。",
+        "Choose whether orders use one collective debtor account or customer numbers.": "选择订单使用统一债务人汇总科目，还是使用客户编号。",
+        "Collective debtor account used when mode is Sammelkonto.": "当模式为汇总科目时使用的债务人科目。",
+        "Increases revenue account numbers per shop when used.": "启用后按店铺递增收入科目编号。",
+        "Increases debtor account numbers per shop when used.": "启用后按店铺递增债务人科目编号。",
+        "Selects which order date is written as voucher date.": "选择写入 DATEV 凭证日期的订单日期来源。",
+        "One DATEV text field generated from a template. Click placeholders below to insert variables.": "由模板生成的一个 DATEV 文本字段。点击下方占位符可插入变量。",
+        "DATEV voucher field 1 template.": "DATEV 凭证字段 1 的模板。",
+        "DATEV voucher field 2 template.": "DATEV 凭证字段 2 的模板。",
+        "Name des Käufers": "买家姓名",
+        Rechnungsnummer: "发票号",
+        Auftragsdatum: "订单日期",
+        "Externe Bestellnummer": "外部订单号",
+        "Zahlungs-ID": "支付交易 ID",
+        Plattform: "平台",
+        Shopname: "店铺名称",
+        Gesamtsumme: "总金额"
+      }
+    };
+
+    const originalTextNodes = new WeakMap();
+
+    const drawer = document.getElementById("drawer");
+    const mask = document.getElementById("mask");
+    const tokenTargets = Array.from(document.querySelectorAll("[data-token-target]"));
+    const tokenValues = Array.from(document.querySelectorAll(".token")).map((button) => button.dataset.token);
+    let activeTokenTarget = tokenTargets[0];
+
+    function applyLanguage(lang) {
+      const dictionary = i18n[lang];
+      const nodeDictionary = staticText[lang] || {};
+      document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.dataset.i18n;
+        if (dictionary[key]) node.textContent = dictionary[key];
+      });
+      document.querySelectorAll(".topnav span, .side-title, .side-item, th, td, label, option, .help, .token").forEach((node) => {
+        const childNodes = Array.from(node.childNodes);
+        childNodes.forEach((child) => {
+          if (child.nodeType !== Node.TEXT_NODE) return;
+          const source = originalTextNodes.get(child) || child.textContent.trim();
+          if (!source) return;
+          originalTextNodes.set(child, source);
+          const leading = child.textContent.match(/^\s*/)[0];
+          const trailing = child.textContent.match(/\s*$/)[0];
+          child.textContent = `${leading}${nodeDictionary[source] || source}${trailing}`;
+        });
+      });
+      document.querySelectorAll(".lang-pill").forEach((button) => {
+        button.classList.toggle("active", button.dataset.lang === lang);
+      });
+    }
+
+    function openDrawer() {
+      drawer.style.display = "grid";
+      mask.style.display = "block";
+    }
+
+    function closeDrawer() {
+      drawer.style.display = "none";
+      mask.style.display = "none";
+    }
+
+    function setActiveTokenTarget(target) {
+      document.querySelectorAll(".template-field").forEach((field) => field.classList.remove("active"));
+      activeTokenTarget = target;
+      target.closest(".template-field").classList.add("active");
+    }
+
+    function insertToken(target, token) {
+      const start = target.selectionStart ?? target.value.length;
+      const end = target.selectionEnd ?? target.value.length;
+      target.value = target.value.slice(0, start) + token + target.value.slice(end);
+      target.focus();
+      const nextPosition = start + token.length;
+      target.setSelectionRange(nextPosition, nextPosition);
+      setActiveTokenTarget(target);
+    }
+
+    function buildVariableGuides() {
+      document.querySelectorAll("[data-variable-guide]").forEach((guide) => {
+        guide.innerHTML = "";
+        tokenValues.forEach((token) => {
+          const chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "variable-chip";
+          chip.dataset.token = token;
+          chip.textContent = token;
+          guide.append(chip);
+        });
+      });
+    }
+
+    document.getElementById("openDrawer").addEventListener("click", openDrawer);
+    document.getElementById("editProfile").addEventListener("click", openDrawer);
+    document.getElementById("closeDrawer").addEventListener("click", closeDrawer);
+    document.getElementById("cancel").addEventListener("click", closeDrawer);
+    mask.addEventListener("click", closeDrawer);
+
+    buildVariableGuides();
+
+    tokenTargets.forEach((target) => {
+      target.addEventListener("focus", () => setActiveTokenTarget(target));
+      target.addEventListener("click", () => setActiveTokenTarget(target));
+    });
+
+    document.querySelectorAll(".variable-chip").forEach((button) => {
+      button.addEventListener("mousedown", (event) => event.preventDefault());
+      button.addEventListener("click", () => insertToken(activeTokenTarget, button.dataset.token));
+    });
+
+    document.querySelectorAll(".token").forEach((button) => {
+      button.addEventListener("mousedown", (event) => event.preventDefault());
+      button.addEventListener("click", () => insertToken(activeTokenTarget, button.dataset.token));
+    });
+
+    document.querySelectorAll(".lang-pill").forEach((button) => {
+      button.addEventListener("click", () => {
+        applyLanguage(button.dataset.lang);
+      });
+    });
+
+    applyLanguage("de");
+    openDrawer();
+  </script>
+</body>
+</html>
