@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>4Seller DATEV MVP Settings</title>
+  <style>
+    :root {
+      --brand: #008069;
+      --brand-hover: #1f9983;
+      --brand-bg: #ebf5f3;
+      --text-1: #1d2129;
+      --text-2: #4e5969;
+      --text-3: #86909c;
+      --text-4: #c0c4cc;
+      --border-1: #ebeef5;
+      --border-2: #e4e7ed;
+      --border-3: #dcdfe6;
+      --fill-1: #f7f8fa;
+      --fill-2: #f2f3f5;
+      --warning-bg: #fff2e6;
+      --warning: #ff7d00;
+      --error: #f53f3f;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 1320px;
+      background: #fff;
+      color: var(--text-1);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "San Francisco", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 400;
+    }
+
+    .topbar {
+      height: 48px;
+      background: #1d2129;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 32px;
+    }
+
+    .brand {
+      width: 144px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 600;
+    }
+
+    .brand-mark {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: var(--brand);
+      display: grid;
+      place-items: center;
+    }
+
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--text-4);
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .topnav .active { color: #fff; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 232px minmax(0, 1fr);
+      min-height: calc(100vh - 48px);
+    }
+
+    .sidebar {
+      background: var(--fill-1);
+      border-right: 1px solid var(--border-1);
+      padding: 20px 16px;
+    }
+
+    .side-title {
+      margin: 18px 0 8px;
+      color: var(--text-1);
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 600;
+    }
+
+    .side-title:first-child { margin-top: 0; }
+
+    .side-item {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      padding-left: 28px;
+      border-radius: 4px;
+      color: var(--text-1);
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .side-item.active {
+      color: var(--brand);
+      background: rgba(0, 128, 105, .08);
+      font-weight: 600;
+    }
+
+    .main {
+      padding: 28px 32px;
+      background: #fff;
+    }
+
+    .page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 28px;
+      font-weight: 600;
+    }
+
+    .page-head p {
+      max-width: 820px;
+      margin: 6px 0 0;
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .head-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .lang-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .lang-pill {
+      height: 28px;
+      border: 1px solid var(--border-2);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--text-2);
+      padding: 0 10px;
+      font-size: 12px;
+      line-height: 16px;
+      cursor: pointer;
+    }
+
+    .lang-pill.active {
+      border-color: var(--brand);
+      background: var(--brand-bg);
+      color: var(--brand);
+    }
+
+    .btn {
+      height: 36px;
+      min-width: 80px;
+      border: 1px solid var(--border-3);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--text-2);
+      padding: 0 16px;
+      font-size: 14px;
+      line-height: 20px;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      border-color: var(--brand);
+      background: var(--brand);
+      color: #fff;
+    }
+
+    .btn.primary:hover { background: var(--brand-hover); }
+
+    .notice {
+      border: 1px solid #ffe0c2;
+      border-radius: 4px;
+      background: var(--warning-bg);
+      color: var(--text-1);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .notice strong {
+      color: var(--warning);
+      font-weight: 600;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .section {
+      border: 1px solid var(--border-1);
+      border-radius: 4px;
+      background: #fff;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .section-title {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-1);
+      padding: 10px 16px;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+
+    .section-title small {
+      color: var(--text-3);
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 400;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .field label {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      margin-bottom: 6px;
+      color: var(--text-2);
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .req { color: var(--error); }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border-3);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--text-1);
+      outline: none;
+      font: inherit;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    input, select {
+      height: 32px;
+      padding: 1px 12px;
+    }
+
+    textarea {
+      min-height: 72px;
+      padding: 8px 12px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 2px rgba(0, 128, 105, .08);
+    }
+
+    .help {
+      margin-top: 4px;
+      color: var(--text-3);
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    .mini-table {
+      padding: 0 16px 16px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      line-height: 16px;
+    }
+
+    th {
+      height: 40px;
+      background: var(--fill-1);
+      border-bottom: 1px solid var(--border-1);
+      padding: 0 16px;
+      text-align: left;
+      color: var(--text-1);
+      font-weight: 600;
+    }
+
+    td {
+      border-bottom: 1px solid var(--border-1);
+      padding: 14px 16px;
+      vertical-align: top;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .template-field { position: relative; }
+
+    .variable-guide {
+      display: none;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 6px;
+      border: 1px solid var(--border-2);
+      border-radius: 4px;
+      background: var(--fill-1);
+      padding: 8px;
+    }
+
+    .template-field.active .variable-guide { display: grid; }
+
+    .variable-chip {
+      height: 28px;
+      border: 1px solid rgba(0, 128, 105, .24);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--brand);
+      padding: 0 8px;
+      text-align: left;
+      font-family: Consolas, "Cascadia Mono", monospace;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .variable-chip:hover { background: var(--brand-bg); border-color: var(--brand); }
+
+    .aside-card {
+      border: 1px solid var(--border-1);
+      border-radius: 4px;
+      background: #fff;
+      padding: 16px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .aside-card h2 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 600;
+    }
+
+    .rule-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text-2);
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .rule-list li + li { margin-top: 8px; }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      border-radius: 4px;
+      background: var(--brand-bg);
+      color: var(--brand);
+      padding: 0 8px;
+      font-size: 12px;
+      line-height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">4</span>4Seller</div>
+    <nav class="topnav">
+      <span>Home</span><span>Order</span><span>Inventory</span><span>Report</span><span class="active">Tools</span>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="side-title">Integration</div>
+      <div class="side-item">Shop</div>
+      <div class="side-item">Payment</div>
+      <div class="side-title">Accounting</div>
+      <div class="side-item active">DATEV MVP</div>
+      <div class="side-item">German Invoice</div>
+      <div class="side-item">Tax settings</div>
+    </aside>
+
+    <main class="main">
+      <div class="page-head">
+        <div>
+          <h1>DATEV Erlösexport MVP</h1>
+          <p>一期只覆盖德国 19%/7%、第三国出口、OSS 按国家配置、固定 Debitoren Sammelkonto 和凭证文本模板。高级税务场景后续版本再扩展。</p>
+        </div>
+        <div class="head-actions">
+          <div class="lang-row">
+            <button class="lang-pill active">中文</button>
+            <button class="lang-pill">Deutsch</button>
+            <button class="lang-pill">English</button>
+          </div>
+          <button class="btn primary">保存设置</button>
+        </div>
+      </div>
+
+      <div class="notice">
+        <strong>MVP 范围：</strong>德国境内标准/优惠税率不需要 Land 字段；OSS 必须保留国家维度，国家专属规则优先于默认 EU 规则。
+      </div>
+
+      <div class="content">
+        <div>
+          <section class="section">
+            <div class="section-title">基础信息 <small>必填</small></div>
+            <div class="form-grid">
+              <div class="field">
+                <label>DATEV Beraternummer <span class="req">*</span></label>
+                <input value="1234" maxlength="7" inputmode="numeric">
+                <div class="help">税务顾问编号，写入 DATEV 文件头，由会计师提供。</div>
+              </div>
+              <div class="field">
+                <label>Mandantennummer <span class="req">*</span></label>
+                <input value="1234" maxlength="5" inputmode="numeric">
+                <div class="help">DATEV 中的客户/企业编号，必须与会计主数据一致。</div>
+              </div>
+              <div class="field">
+                <label>Länge Sachkontennummern <span class="req">*</span></label>
+                <select><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select>
+                <div class="help">总账科目编号长度，用于校验 Konto 和 Debitorenkonto。</div>
+              </div>
+              <div class="field">
+                <label>Export Format <span class="req">*</span></label>
+                <select><option selected>DATEV Format (CSV)</option></select>
+                <div class="help">一期固定导出 DATEV CSV。</div>
+              </div>
+              <div class="field">
+                <label>Beginn des Wirtschaftsjahres Tag <span class="req">*</span></label>
+                <select><option selected>1</option><option>15</option></select>
+                <div class="help">财年开始日，用于导出期间校验。</div>
+              </div>
+              <div class="field">
+                <label>Monat <span class="req">*</span></label>
+                <select><option selected>Januar</option><option>Februar</option><option>März</option><option>April</option><option>Mai</option><option>Juni</option><option>Juli</option><option>August</option><option>September</option><option>Oktober</option><option>November</option><option>Dezember</option></select>
+                <div class="help">财年开始月，与开始日一起判断会计年度。</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">德国境内收入科目 <small>无 Land 字段</small></div>
+            <div class="form-grid">
+              <div class="field">
+                <label>Erlöskonto volle Umsatzsteuer <span class="req">*</span></label>
+                <input value="8400" maxlength="8" inputmode="numeric">
+                <div class="help">德国境内标准税率收入科目，SKR03 常见默认值为 8400。</div>
+              </div>
+              <div class="field">
+                <label>BU-/Steuerschlüssel</label>
+                <input value="" maxlength="3" inputmode="numeric" placeholder="可留空">
+                <div class="help">标准税率税务键，仅在 Steuerberater 要求时填写；默认建议留空。</div>
+              </div>
+              <div class="field">
+                <label>Erlöskonto ermäßigte Umsatzsteuer <span class="req">*</span></label>
+                <input value="8300" maxlength="8" inputmode="numeric">
+                <div class="help">德国境内优惠税率收入科目，SKR03 常见默认值为 8300。</div>
+              </div>
+              <div class="field">
+                <label>BU-/Steuerschlüssel</label>
+                <input value="" maxlength="3" inputmode="numeric" placeholder="可留空">
+                <div class="help">优惠税率税务键，仅在会计要求时填写；默认建议留空。</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">第三国出口免税 <small>欧盟外目的国</small></div>
+            <div class="mini-table">
+              <table>
+                <thead>
+                  <tr><th>Land</th><th>Konto</th><th>BU-/Steuerschlüssel</th><th></th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Alle Drittländer</td>
+                    <td><input value="8120" maxlength="8" inputmode="numeric"></td>
+                    <td><input value="" maxlength="3" inputmode="numeric" placeholder="可留空"></td>
+                    <td><button class="btn">+</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">OSS Fernverkäufe 标准税率 <small>按 EU 国家配置</small></div>
+            <div class="mini-table">
+              <table>
+                <thead>
+                  <tr><th>Land</th><th>Konto</th><th>BU-/Steuerschlüssel</th><th></th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Alle EU-Länder</td>
+                    <td><input value="" maxlength="8" inputmode="numeric" placeholder="会计确认"></td>
+                    <td><input value="" maxlength="3" inputmode="numeric" placeholder="可留空"></td>
+                    <td><button class="btn">+</button></td>
+                  </tr>
+                  <tr>
+                    <td>Frankreich</td>
+                    <td><input value="" maxlength="8" inputmode="numeric" placeholder="可覆盖默认"></td>
+                    <td><input value="" maxlength="3" inputmode="numeric"></td>
+                    <td><button class="btn">删除</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">OSS Fernverkäufe 优惠税率 <small>按 EU 国家配置</small></div>
+            <div class="mini-table">
+              <table>
+                <thead>
+                  <tr><th>Land</th><th>Konto</th><th>BU-/Steuerschlüssel</th><th></th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Alle EU-Länder</td>
+                    <td><input value="" maxlength="8" inputmode="numeric" placeholder="会计确认"></td>
+                    <td><input value="" maxlength="3" inputmode="numeric" placeholder="可留空"></td>
+                    <td><button class="btn">+</button></td>
+                  </tr>
+                  <tr>
+                    <td>Niederlande</td>
+                    <td><input value="" maxlength="8" inputmode="numeric" placeholder="可覆盖默认"></td>
+                    <td><input value="" maxlength="3" inputmode="numeric"></td>
+                    <td><button class="btn">删除</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">Debitorenkonten <small>一期固定 Sammelkonto</small></div>
+            <div class="form-grid">
+              <div class="field">
+                <label>Modus</label>
+                <select disabled><option selected>Sammelkonto</option></select>
+                <div class="help">一期固定所有订单使用统一债务人汇总科目，不按客户号生成 Debitor。</div>
+              </div>
+              <div class="field">
+                <label>Debitoren Sammelkonto <span class="req">*</span></label>
+                <input value="1111" maxlength="8" inputmode="numeric">
+                <div class="help">收入分录的对方科目，适合电商大量一次性客户场景。</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-title">Sonstiges / Belegtexte <small>凭证配置</small></div>
+            <div class="form-grid">
+              <div class="field">
+                <label>Umsatzkontonummern pro Shop erhöhen</label>
+                <input value="2" maxlength="4" inputmode="numeric">
+                <div class="help">按店铺递增收入科目号，例如 8400、8402、8404。</div>
+              </div>
+              <div class="field">
+                <label>Debitorenkontonummern pro Shop erhöhen</label>
+                <input value="2" maxlength="4" inputmode="numeric">
+                <div class="help">按店铺递增债务人科目号，例如 1111、1113、1115。</div>
+              </div>
+              <div class="field">
+                <label>Eigenschaft Belegdatum <span class="req">*</span></label>
+                <select><option selected>Bestelldatum</option><option>Zahldatum</option><option>Rechnungsdatum</option><option>Versanddatum</option></select>
+                <div class="help">决定 DATEV Belegdatum 使用下单、付款、发票或发货日期。</div>
+              </div>
+              <div class="field wide template-field active">
+                <label>Belegtext</label>
+                <textarea data-token-target>{Platform} {OrderRef}</textarea>
+                <div class="variable-guide" data-variable-guide></div>
+                <div class="help">DATEV 凭证文本模板，变量 chip 只是输入引导。</div>
+              </div>
+              <div class="field template-field">
+                <label>Belegfeld 1</label>
+                <input data-token-target value="{InvoiceNumber}">
+                <div class="variable-guide" data-variable-guide></div>
+                <div class="help">建议放发票号或外部订单号。</div>
+              </div>
+              <div class="field template-field">
+                <label>Belegfeld 2</label>
+                <input data-token-target value="{ShopName}">
+                <div class="variable-guide" data-variable-guide></div>
+                <div class="help">建议放店铺名、发货日期或支付交易 ID。</div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="aside-card">
+          <h2>一期判断规则</h2>
+          <ul class="rule-list">
+            <li><span class="tag">德国 19%</span> 使用 `Erlöskonto volle Umsatzsteuer`，不需要 Land。</li>
+            <li><span class="tag">德国 7%</span> 使用 `Erlöskonto ermäßigte Umsatzsteuer`，不需要 Land。</li>
+            <li><span class="tag">OSS</span> 根据 `ship_to_country` 匹配国家专属规则，找不到则使用 `Alle EU-Länder`。</li>
+            <li><span class="tag">Drittland</span> 根据目的国是否欧盟外判断，默认使用 `Alle Drittländer`。</li>
+            <li><span class="tag">Debitor</span> 一期固定 `Sammelkonto`，不生成客户级 Debitor。</li>
+            <li>不覆盖 EU B2B 免税交付、小规模企业、差额征税、德国不征税、数字商品等高级场景。</li>
+          </ul>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const tokenValues = ["{BuyerName}", "{CustomerNumber}", "{InvoiceNumber}", "{OrderDate}", "{OrderRef}", "{PaymentTransactionId}", "{Platform}", "{ShipDate}", "{ShopName}", "{TotalSum}"];
+    const tokenTargets = Array.from(document.querySelectorAll("[data-token-target]"));
+    let activeTokenTarget = tokenTargets[0];
+
+    function setActiveTokenTarget(target) {
+      document.querySelectorAll(".template-field").forEach((field) => field.classList.remove("active"));
+      activeTokenTarget = target;
+      target.closest(".template-field").classList.add("active");
+    }
+
+    function insertToken(target, token) {
+      const start = target.selectionStart ?? target.value.length;
+      const end = target.selectionEnd ?? target.value.length;
+      target.value = target.value.slice(0, start) + token + target.value.slice(end);
+      target.focus();
+      const nextPosition = start + token.length;
+      target.setSelectionRange(nextPosition, nextPosition);
+      setActiveTokenTarget(target);
+    }
+
+    document.querySelectorAll("[data-variable-guide]").forEach((guide) => {
+      tokenValues.forEach((token) => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "variable-chip";
+        chip.dataset.token = token;
+        chip.textContent = token;
+        guide.append(chip);
+      });
+    });
+
+    tokenTargets.forEach((target) => {
+      target.addEventListener("focus", () => setActiveTokenTarget(target));
+      target.addEventListener("click", () => setActiveTokenTarget(target));
+    });
+
+    document.querySelectorAll(".variable-chip").forEach((button) => {
+      button.addEventListener("mousedown", (event) => event.preventDefault());
+      button.addEventListener("click", () => insertToken(activeTokenTarget, button.dataset.token));
+    });
+
+    document.querySelectorAll(".lang-pill").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".lang-pill").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>
